@@ -64,6 +64,7 @@
     name='subversion,git,which'
 
 - name: 作業ディレクトリ作成
+  become: yes
   file: path={{ work_dir }}
     state=directory
     mode=0755

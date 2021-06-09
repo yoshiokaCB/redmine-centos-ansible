@@ -1,14 +1,14 @@
-- name: Redmineのソースコードをチェックアウト
+- name: Redmicaのソースコードを取得
   become: yes
-  subversion:
-    repo={{ redmine_svn_url }}
-    dest={{ redmine_dir }}
+  ansible.builtin.git:
+    repo={{ redmica_git_url }}
+    dest={{ redmica_dir }}
 
 - name: database.ymlの作成
   become: yes
   template:
     src=database.yml
-    dest={{ redmine_dir }}/config/database.yml
+    dest={{ redmica_dir }}/config/database.yml
     force=no
   register:
     result_database_yml
@@ -17,12 +17,12 @@
   become: yes
   template:
     src=configuration.yml
-    dest={{ redmine_dir }}/config/configuration.yml
+    dest={{ redmica_dir }}/config/configuration.yml
     force=no
 
 - name: Gemfile.lockが存在するか確認
   command:
-    test -f {{ redmine_dir }}/Gemfile.lock
+    test -f {{ redmica_dir }}/Gemfile.lock
   register:
     result_test_gemfile
   failed_when: result_test_gemfile.rc not in [0, 1]
@@ -32,7 +32,7 @@
   become: yes
   command:
     bundle install --path vendor/bundle
-    chdir={{ redmine_dir }}
+    chdir={{ redmica_dir }}
   environment:
     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
   when:
@@ -42,7 +42,7 @@
   become: yes
   command:
     bundle update
-    chdir={{ redmine_dir }}
+    chdir={{ redmica_dir }}
   environment:
     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
   when:
@@ -52,7 +52,7 @@
   become: yes
   command:
     bundle exec rake generate_secret_token
-    chdir={{ redmine_dir }}
+    chdir={{ redmica_dir }}
   environment:
     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
     RAILS_ENV: production
@@ -61,7 +61,7 @@
   become: yes
   command:
     bundle exec rake db:migrate
-    chdir={{ redmine_dir }}
+    chdir={{ redmica_dir }}
   environment:
     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
     RAILS_ENV: production
@@ -69,8 +69,8 @@
 - name: デフォルトデータ(日本語)をロード
   become: yes
   command:
-    bundle exec rake redmine:load_default_data
-    chdir={{ redmine_dir }}
+    bundle exec rake redmica:load_default_data
+    chdir={{ redmica_dir }}
   environment:
     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
     RAILS_ENV: production
@@ -81,14 +81,14 @@
 - name: farend_basicテーマのダウンロード
   become: yes
   git:
-    repo=https://github.com/farend/redmine_theme_farend_basic.git
-    dest={{ redmine_dir }}/public/themes/farend_basic
+    repo=https://github.com/farend/redmica_theme_farend_basic.git
+    dest={{ redmica_dir }}/public/themes/farend_basic
 
 - name: テーマをfarend_basicに切り替え
   become: yes
   command:
     bundle exec rails r 'Setting["ui_theme"]="farend_basic"'
-    chdir={{ redmine_dir }}
+    chdir={{ redmica_dir }}
   environment:
     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
     RAILS_ENV: production
@@ -99,7 +99,7 @@
   become: yes
   command:
     bundle exec rails r 'Setting["default_language"]="ja"'
-    chdir={{ redmine_dir }}
+    chdir={{ redmica_dir }}
   environment:
     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
     RAILS_ENV: production
@@ -110,7 +110,7 @@
   become: yes
   command:
     bundle exec rails r 'Setting["user_format"]=:lastname_firstname'
-    chdir={{ redmine_dir }}
+    chdir={{ redmica_dir }}
   environment:
     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
     RAILS_ENV: production
@@ -121,7 +121,7 @@
   become: yes
   command:
     bundle exec rails r 'Setting["repositories_encodings"]="UTF-8,CP932,EUC-JP"'
-    chdir={{ redmine_dir }}
+    chdir={{ redmica_dir }}
   environment:
     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
     RAILS_ENV: production
@@ -132,7 +132,7 @@
   become: yes
   command:
     bundle exec rails r 'Setting["thumbnails_enabled"]="1"'
-    chdir={{ redmine_dir }}
+    chdir={{ redmica_dir }}
   environment:
     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
     RAILS_ENV: production

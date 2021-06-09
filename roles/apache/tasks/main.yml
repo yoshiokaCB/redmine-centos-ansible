@@ -1,9 +1,9 @@
 - name: Redmineディレクトリ以下のオーナーを変更
   become: yes
   file:
-    path: "{{ redmine_dir }}"
-    owner: "{{ redmine_dir_owner }}"
-    group: "{{ redmine_dir_group }}"
+    path: "{{ redmica_dir }}"
+    owner: "{{ redmica_dir_owner }}"
+    group: "{{ redmica_dir_group }}"
     recurse: yes
 
 - name: Passengerがインストールされているか確認
@@ -40,11 +40,11 @@
     passenger_snippet_vars
   changed_when: false
 
-- name: redmine.confの作成
+- name: redmica.confの作成
   become: yes
   template:
-    src=redmine.conf
-    dest=/etc/httpd/conf.d/redmine.conf
+    src=redmica.conf
+    dest=/etc/httpd/conf.d/redmica.conf
 
 - name: httpdの再起動
   become: yes

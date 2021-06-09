@@ -5,5 +5,3 @@ production:
       address: "localhost"
       port: 25
       domain: "{{ ansible_fqdn }}"
-
-  rmagick_font_path: {{ redmine_font_path }}

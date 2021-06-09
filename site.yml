@@ -1,13 +1,13 @@
-- hosts: redmine-servers
+- hosts: redmica-servers
 
   roles:
     - system
     - pg
     - ruby
-    - redmine
+    - redmica
     - apache
 
   post_tasks:
     - name: 完了
       debug:
-        msg='インストールが完了しました。 http://{{ ansible_default_ipv4.address }}/redmine/ にアクセスしてください。'
+        msg='インストールが完了しました。 http://{{ ansible_default_ipv4.address }}/redmica/ にアクセスしてください。'
