@@ -31,9 +31,10 @@ Ansibleを使ってRedmineを自動インストールするためのプレイブ
 ### Ansibleとgitのインストール
 
 ```
-yum update -y
-yum install -y epel-release glibc-locale-source
-yum install -y ansible git
+sudo yum update -y
+sudo amazon-linux-extras install -y epel
+sudo yum install -y ansible git
+
 
 ===================== Dockerの場合は以下も実行する===================
 yum install -y policycoreutils selinux-policy-targeted firewalld sudo

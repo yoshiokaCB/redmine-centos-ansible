@@ -46,20 +46,17 @@
 - name:  PostgreSQLとヘッダファイルのインストール
   become: yes
   yum:
-    name='postgresql-server,postgresql-devel,python3-psycopg2'
+    name='postgresql-server,postgresql-devel,python-psycopg2'
 
 - name: Apacheとヘッダファイルのインストール
   become: yes
   yum:
     name='httpd,httpd-devel'
 
-- name: powertoolのインストール
-  shell: dnf config-manager --set-enabled powertools warn=no
-
-- name: ImageMagickとヘッダファイル・日本語フォントのインストール
+- name: ImageMagickのインストール
   become: yes
   yum:
-    name='ImageMagick,ImageMagick-devel,google-noto-sans-cjk-jp-fonts'
+    name='ImageMagick,ImageMagick-devel'
 
 - name: そのほかのツールのインストール
   become: yes
