@@ -69,7 +69,7 @@
 - name: デフォルトデータ(日本語)をロード
   become: yes
   command:
-    bundle exec rake redmica:load_default_data
+    bundle exec rake redmine:load_default_data
     chdir={{ redmica_dir }}
   environment:
     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"

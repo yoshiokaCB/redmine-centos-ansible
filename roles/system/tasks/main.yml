@@ -44,12 +44,14 @@
     name='openssl-devel,readline-devel,zlib-devel,curl-devel,libyaml,libffi-devel'
 
 - name: Install a yum repository file of pgdg 1/2.
+  become: yes
   command: "rpm -ivh --nodeps https://download.postgresql.org/pub/repos/yum/12/redhat/rhel-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm"
   args:
     creates: /etc/yum.repos.d/pgdg-redhat-all.repo
     warn: no
 
 - name: Install a yum repository file of pgdg 2/2.
+  become: yes
   replace: dest=/etc/yum.repos.d/pgdg-redhat-all.repo regexp='\$releasever' replace='7'
 
 - name:  PostgreSQLとヘッダファイルのインストール
