@@ -1,32 +1,22 @@
-# redmine-centos-ansible
+# redmine-amazonlinux2-ansible
 
-| :warning: CentOS 8の提供が2021年で終了されることが決まりました。このansible-playbookはこれ以降のRedmineのバージョンアップに対応するための更新を行いません。 |
-| --- |
-
-最小構成でインストールしたCentOSにRedmineを自動インストールするためのAnsibleプレイブックです。
-
-コマンド5個実行するだけで、あとはしばらく放置すればインストールが完了します。
-
+Amazon Linux 2 にRedmicaを自動インストールするためのAnsibleプレイブックです。
 
 ## 概要
 
-Ansibleを使ってRedmineを自動インストールするためのプレイブックです。以下のwebサイトで紹介されている手順におおむね準拠しています。
-
-[Redmine 3.4をCentOS 7.3にインストールする手順](http://blog.redmine.jp/articles/3_4/install/centos/)
-
+Ansibleを使ってRedmicaを自動インストールするためのプレイブックです。
 
 ## システム構成
 
-* Redmine 4.0
-* CentOS 8.0
+* Redmica 1.3
+* Amazon Linux 2
 * PostgreSQL
 * Apache
 
 
-## Redmineのインストール手順
+## Redmicaのインストール手順
 
-インストール直後の CentOS 8.0 に root でログインし以下の操作を行ってください。
-
+インストール直後の Amazon Linux 2 にSSMでログインし以下の操作を行ってください。
 
 ### Ansibleとgitのインストール
 
@@ -34,22 +24,18 @@ Ansibleを使ってRedmineを自動インストールするためのプレイブ
 sudo yum update -y
 sudo amazon-linux-extras install -y epel
 sudo yum install -y ansible git
-
-
-===================== Dockerの場合は以下も実行する===================
-yum install -y policycoreutils selinux-policy-targeted firewalld sudo
-=====================================================================
 ```
 
 ### playbookのダウンロード
 
 ```
-git clone https://github.com/farend/redmine-centos-ansible.git
+git clone -b redmica https://github.com/yoshiokaCB/redmine-centos-ansible.git
 ```
 
 ### PostgreSQLに設定するパスワードの変更
 
-ダウンロードしたプレイブック内のファイル `group_vars/redmine-servers` をエディタで開き、 `db_passwd_redmine` を適当な内容に変更してください。これはPostgreSQLのRedmine用ユーザー redmine に設定されるパスワードです。
+ダウンロードしたプレイブック内のファイル `group_vars/redmine-servers` をエディタで開き、 `db_passwd_redmine` を適当な内容に変更してください。
+これはPostgreSQLのRedmine用ユーザー redmica に設定されるパスワードです。
 
 ### playbook実行
 
@@ -60,14 +46,10 @@ cd redmine-centos-ansible
 ansible-playbook -i hosts site.yml
 ```
 
-10〜20分ほどでインストールが完了します。webブラウザで `http://サーバIPアドレス/redmine` にアクセスしてください。Redmineの画面が表示されるはずです。
+10〜20分ほどでインストールが完了します。webブラウザで `http://パブリックIPアドレス/redmine` にアクセスしてください。Redmineの画面が表示されるはずです。
 
 
 ## ライセンス
 
 MIT License
 
-
-## 作者
-
-[ファーエンドテクノロジー株式会社](http://www.farend.co.jp/)
