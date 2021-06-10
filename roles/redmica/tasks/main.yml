@@ -31,7 +31,7 @@
 - name: gemsパッケージのインストール
   become: yes
   command:
-    bundle install --path vendor/bundle
+    bundle install
     chdir={{ redmica_dir }}
   environment:
     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
@@ -48,76 +48,76 @@
   when:
     result_test_gemfile.rc == 0
 
-- name: secret tokenの作成
-  become: yes
-  command:
-    bundle exec rake generate_secret_token
-    chdir={{ redmica_dir }}
-  environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
-    RAILS_ENV: production
+# - name: secret tokenの作成
+#   become: yes
+#   command:
+#     bundle exec rake generate_secret_token
+#     chdir={{ redmica_dir }}
+#   environment:
+#     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+#     RAILS_ENV: production
 
-- name: データベースのマイグレーション
-  become: yes
-  command:
-    bundle exec rake db:migrate
-    chdir={{ redmica_dir }}
-  environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
-    RAILS_ENV: production
+# - name: データベースのマイグレーション
+#   become: yes
+#   command:
+#     bundle exec rake db:migrate
+#     chdir={{ redmica_dir }}
+#   environment:
+#     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+#     RAILS_ENV: production
 
-- name: デフォルトデータ(日本語)をロード
-  become: yes
-  command:
-    bundle exec rake redmine:load_default_data
-    chdir={{ redmica_dir }}
-  environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
-    RAILS_ENV: production
-    REDMINE_LANG: ja
-  when:
-    result_database_yml is changed
+# - name: デフォルトデータ(日本語)をロード
+#   become: yes
+#   command:
+#     bundle exec rake redmine:load_default_data
+#     chdir={{ redmica_dir }}
+#   environment:
+#     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+#     RAILS_ENV: production
+#     REDMINE_LANG: ja
+#   when:
+#     result_database_yml is changed
 
-- name: デフォルトの言語を日本語に変更
-  become: yes
-  command:
-    bundle exec rails r 'Setting["default_language"]="ja"'
-    chdir={{ redmica_dir }}
-  environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
-    RAILS_ENV: production
-  when:
-    result_database_yml is changed
+# - name: デフォルトの言語を日本語に変更
+#   become: yes
+#   command:
+#     bundle exec rails r 'Setting["default_language"]="ja"'
+#     chdir={{ redmica_dir }}
+#   environment:
+#     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+#     RAILS_ENV: production
+#   when:
+#     result_database_yml is changed
 
-- name: ユーザー名の表示形式を「姓 名」に変更
-  become: yes
-  command:
-    bundle exec rails r 'Setting["user_format"]=:lastname_firstname'
-    chdir={{ redmica_dir }}
-  environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
-    RAILS_ENV: production
-  when:
-    result_database_yml is changed
+# - name: ユーザー名の表示形式を「姓 名」に変更
+#   become: yes
+#   command:
+#     bundle exec rails r 'Setting["user_format"]=:lastname_firstname'
+#     chdir={{ redmica_dir }}
+#   environment:
+#     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+#     RAILS_ENV: production
+#   when:
+#     result_database_yml is changed
 
-- name: 添付ファイルとリポジトリのエンコーディングを設定
-  become: yes
-  command:
-    bundle exec rails r 'Setting["repositories_encodings"]="UTF-8,CP932,EUC-JP"'
-    chdir={{ redmica_dir }}
-  environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
-    RAILS_ENV: production
-  when:
-    result_database_yml is changed
+# - name: 添付ファイルとリポジトリのエンコーディングを設定
+#   become: yes
+#   command:
+#     bundle exec rails r 'Setting["repositories_encodings"]="UTF-8,CP932,EUC-JP"'
+#     chdir={{ redmica_dir }}
+#   environment:
+#     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+#     RAILS_ENV: production
+#   when:
+#     result_database_yml is changed
 
-- name: 添付ファイルのサムネイルを表示
-  become: yes
-  command:
-    bundle exec rails r 'Setting["thumbnails_enabled"]="1"'
-    chdir={{ redmica_dir }}
-  environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
-    RAILS_ENV: production
-  when:
-    result_database_yml is changed
+# - name: 添付ファイルのサムネイルを表示
+#   become: yes
+#   command:
+#     bundle exec rails r 'Setting["thumbnails_enabled"]="1"'
+#     chdir={{ redmica_dir }}
+#   environment:
+#     PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+#     RAILS_ENV: production
+#   when:
+#     result_database_yml is changed

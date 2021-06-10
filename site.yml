@@ -2,12 +2,12 @@
 
   roles:
     - system
-    - pg
+    # - pg
     - ruby
     - redmica
-    - apache
+    # - apache
 
   post_tasks:
     - name: 完了
       debug:
-        msg='インストールが完了しました。 http://{{ ansible_default_ipv4.address }}/redmica/ にアクセスしてください。'
+        msg='インストールが完了しました。'
