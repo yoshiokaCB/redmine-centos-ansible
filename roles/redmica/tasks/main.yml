@@ -78,23 +78,6 @@
   when:
     result_database_yml is changed
 
-- name: farend_basicテーマのダウンロード
-  become: yes
-  git:
-    repo=https://github.com/farend/redmica_theme_farend_basic.git
-    dest={{ redmica_dir }}/public/themes/farend_basic
-
-- name: テーマをfarend_basicに切り替え
-  become: yes
-  command:
-    bundle exec rails r 'Setting["ui_theme"]="farend_basic"'
-    chdir={{ redmica_dir }}
-  environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
-    RAILS_ENV: production
-  when:
-    result_database_yml is changed
-
 - name: デフォルトの言語を日本語に変更
   become: yes
   command:
