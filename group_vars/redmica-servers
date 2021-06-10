@@ -21,8 +21,8 @@ redmica_locale: ja_JP.UTF-8
 pg_hba_conf_path: /var/lib/pgsql/12/data/pg_hba.conf
 
 # ダウンロードするRubyのソースコード
-ruby_url_dir: https://cache.ruby-lang.org/pub/ruby/2.6
-ruby_archive_version: ruby-2.6.5
+ruby_url_dir: https://cache.ruby-lang.org/pub/ruby/2.7
+ruby_archive_version: ruby-2.7.3
 ruby_archive_ext: tar.bz2
 ruby_archive_name: "{{ ruby_archive_version }}.{{ ruby_archive_ext }}"
 
