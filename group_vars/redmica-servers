@@ -18,7 +18,7 @@ redmica_dir_group: apache
 redmica_locale: ja_JP.UTF-8
 
 # pg_hba.confのパス
-pg_hba_conf_path: /var/lib/pgsql/12/data/pg_hba.conf
+pg_hba_conf_path: /var/lib/pgsql/10/data/pg_hba.conf
 
 # ダウンロードするRubyのソースコード
 ruby_url_dir: https://cache.ruby-lang.org/pub/ruby/2.7

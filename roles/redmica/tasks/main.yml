@@ -34,7 +34,7 @@
     bundle install --path vendor/bundle
     chdir={{ redmica_dir }}
   environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}:/usr/pgsql-10/bin"
   when:
     result_test_gemfile.rc == 1
 
@@ -44,7 +44,7 @@
     bundle update
     chdir={{ redmica_dir }}
   environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}:/usr/pgsql-10/bin"
   when:
     result_test_gemfile.rc == 0
 
