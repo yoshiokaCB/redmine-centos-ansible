@@ -1,11 +1,11 @@
 - name: PostgreSQL initdb
   become: yes
-  shell:
-    PGSETUP_INITDB_OPTIONS="--encoding=UTF-8 --locale=C" postgresql-setup initdb
-  register:
-    result
-  failed_when: result.rc not in [0, 1]
-  changed_when: result.rc == 0
+  command: /usr/pgsql-12/bin/postgresql-12-setup initdb
+  environment:
+    PGSETUP_INITDB_OPTIONS: --encoding=UTF-8 --locale=C
+  args:
+    creates: /var/lib/pgsql/12/data/PG_VERSION
+    warn: no
 
 - name: pg_hba.confにredmica用設定が存在するか確認
   become: yes
@@ -42,7 +42,7 @@
 - name: PostgreSQL起動
   become: yes
   service:
-    name=postgresql
+    name=postgresql-12
     state=restarted
     enabled=yes
 

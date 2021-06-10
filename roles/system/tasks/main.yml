@@ -43,10 +43,20 @@
   yum:
     name='openssl-devel,readline-devel,zlib-devel,curl-devel,libyaml,libffi-devel'
 
+- name: Install a yum repository file of pgdg 1/2.
+  command: "rpm -ivh --nodeps https://download.postgresql.org/pub/repos/yum/12/redhat/rhel-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm"
+  args:
+    creates: /etc/yum.repos.d/pgdg-redhat-all.repo
+    warn: no
+
+- name: Install a yum repository file of pgdg 2/2.
+  replace: dest=/etc/yum.repos.d/pgdg-redhat-all.repo regexp='\$releasever' replace='7'
+
 - name:  PostgreSQLとヘッダファイルのインストール
   become: yes
   yum:
-    name='postgresql-server,postgresql-devel,python-psycopg2'
+    name='postgresql12-server,postgresql12,python-psycopg2'
+    # name='postgresql-server,postgresql-devel,python-psycopg2'
 
 - name: Apacheとヘッダファイルのインストール
   become: yes
