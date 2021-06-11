@@ -1,8 +1,16 @@
 - name: Redmicaのソースコードを取得
-  # become: yes
+  become: yes
   ansible.builtin.git:
     repo={{ redmica_git_url }}
     dest={{ redmica_dir }}
+
+- name: Redmineディレクトリ以下のオーナーを変更
+  become: yes
+  file:
+    path: "{{ redmica_dir }}"
+    owner: "{{ redmica_owner }}"
+    group: "{{ redmica_group }}"
+    recurse: yes
 
 - name: database.ymlの作成
   # become: yes

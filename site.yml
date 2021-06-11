@@ -3,7 +3,8 @@
   roles:
     - system
     # - pg
-    - ruby
+    # - ruby
+    - rbenv
     - redmica
     # - apache
 
