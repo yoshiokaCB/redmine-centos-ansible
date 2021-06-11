@@ -1,11 +1,11 @@
 - name: Redmicaのソースコードを取得
-  become: yes
+  # become: yes
   ansible.builtin.git:
     repo={{ redmica_git_url }}
     dest={{ redmica_dir }}
 
 - name: database.ymlの作成
-  become: yes
+  # become: yes
   template:
     src=database.yml
     dest={{ redmica_dir }}/config/database.yml
@@ -14,7 +14,7 @@
     result_database_yml
 
 - name: configuration.ymlの作成
-  become: yes
+  # become: yes
   template:
     src=configuration.yml
     dest={{ redmica_dir }}/config/configuration.yml
@@ -29,22 +29,22 @@
   changed_when: false
 
 - name: gemsパッケージのインストール
-  become: yes
+  # become: yes
   command:
     bundle install
     chdir={{ redmica_dir }}
   environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}:/usr/pgsql-10/bin"
+    PATH: "{{ruby_path}}:{{ ansible_env.PATH }}:/usr/pgsql-10/bin"
   when:
     result_test_gemfile.rc == 1
 
 - name: gemsパッケージのアップデート
-  become: yes
+  # become: yes
   command:
     bundle update
     chdir={{ redmica_dir }}
   environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}:/usr/pgsql-10/bin"
+    PATH: "{{ruby_path}}:{{ ansible_env.PATH }}:/usr/pgsql-10/bin"
   when:
     result_test_gemfile.rc == 0
 

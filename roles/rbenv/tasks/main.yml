@@ -15,8 +15,8 @@
     dest: ~/.rbenv/plugins/ruby-build
 
 - name: rbenv インストール
-  shell: /home/centos/.rbenv/plugins/ruby-build/install.sh
-    become: true
+  shell: /home/ssm-user/.rbenv/plugins/ruby-build/install.sh
+  become: yes
 
 - name: ruby インストール
   shell: |
@@ -24,7 +24,7 @@
     rbenv rehash
     rbenv global {{ruby_version}}
   environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+    PATH: "{{rbenv_path}}:{{ ansible_env.PATH }}"
 
 - name: bundler インストール
   # become: yes
@@ -33,4 +33,4 @@
     version=1.17.3
     user_install=no
   environment:
-    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+    PATH: "{{ruby_path}}:{{ ansible_env.PATH }}"
