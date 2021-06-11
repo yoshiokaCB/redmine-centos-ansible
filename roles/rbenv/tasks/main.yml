@@ -1,0 +1,36 @@
+- name: rbenv ダウンロード
+  git:
+    repo: https://github.com/sstephenson/rbenv.git
+    dest: ~/.rbenv
+
+- name: PATH 設定
+  shell: |
+    echo 'export PATH="${HOME}/.rbenv/bin:$PATH"' >> ~/.bash_profile
+    echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+    source ~/.bash_profile
+
+- name: ruby-build ダウンロード
+  git:
+    repo: git://github.com/sstephenson/ruby-build.git 
+    dest: ~/.rbenv/plugins/ruby-build
+
+- name: rbenv インストール
+  shell: /home/centos/.rbenv/plugins/ruby-build/install.sh
+    become: true
+
+- name: ruby インストール
+  shell: |
+    rbenv install {{ruby_version}}
+    rbenv rehash
+    rbenv global {{ruby_version}}
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+
+- name: bundler インストール
+  # become: yes
+  gem:
+    name=bundler
+    version=1.17.3
+    user_install=no
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
